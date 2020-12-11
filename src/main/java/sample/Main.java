@@ -3,10 +3,7 @@ package sample;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -19,7 +16,25 @@ public class Main extends Application {
         BorderPane root = new BorderPane();
         root.getStyleClass().add(getClass().getResource("sample.fxml").toExternalForm());
         Label label = new Label("公众号：程序新视界");
+        label.setStyle("-fx-label-padding: 0 100px");
         root.setBottom(label);
+
+        Button button = new Button("连接");
+        button.setStyle("-fx-end-margin: 100px");
+        button.setOnAction(event -> {
+            String text = button.getText();
+            if ("连接".equals(text)) {
+                button.setText("断开");
+            } else {
+                button.setText("连接");
+            }
+
+        });
+        root.setCenter(button);
+//        root.getCenter().setStyle("");
+
+        root.setRight(new Label("Right"));
+        root.setLeft(new Label("Left"));
 
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().add(createAboutMenu());
