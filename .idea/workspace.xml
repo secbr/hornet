@@ -219,7 +219,7 @@
       <updated>1359379246138</updated>
       <workItem from="1359379250712" duration="1302000" />
       <workItem from="1607607096030" duration="3467000" />
-      <workItem from="1607666601459" duration="1070000" />
+      <workItem from="1607666601459" duration="1103000" />
     </task>
     <task id="LOCAL-00001" summary="添加打包工具">
       <created>1607668037534</created>
@@ -242,7 +242,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607668259061</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="排除">
+      <created>1607668284207</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1607668284207</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -264,10 +271,10 @@
       <screen x="0" y="23" width="1680" height="969" />
     </state>
     <state x="454" y="185" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/-135.-1057.1920.1057/0.23.1680.969@0.23.1680.969" timestamp="1607607133442" />
-    <state x="390" y="79" key="CommitChangelistDialog2" timestamp="1607668258955">
+    <state x="390" y="79" key="CommitChangelistDialog2" timestamp="1607668284107">
       <screen x="0" y="23" width="1680" height="970" />
     </state>
-    <state x="390" y="79" key="CommitChangelistDialog2/1680.-1056.2560.1417/0.23.1680.970@0.23.1680.970" timestamp="1607668258955" />
+    <state x="390" y="79" key="CommitChangelistDialog2/1680.-1056.2560.1417/0.23.1680.970@0.23.1680.970" timestamp="1607668284107" />
     <state width="1638" height="254" key="GridCell.Tab.0.bottom" timestamp="1607668228643">
       <screen x="0" y="23" width="1680" height="970" />
     </state>
