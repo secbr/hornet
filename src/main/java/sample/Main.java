@@ -19,7 +19,7 @@ public class Main extends Application {
         BorderPane root = new BorderPane();
         root.getStyleClass().add(getClass().getResource("sample.fxml").toExternalForm());
         Label label = new Label("公众号：程序新视界");
-        root.setCenter(label);
+        root.setBottom(label);
 
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().add(createAboutMenu());
@@ -27,9 +27,8 @@ public class Main extends Application {
 
         primaryStage.setTitle("Hornet");
         Scene scene = new Scene(root, 600, 550);
+
         primaryStage.setScene(scene);
-
-
         primaryStage.show();
     }
 
@@ -43,9 +42,7 @@ public class Main extends Application {
     }
 
     private MenuItem aboutAuthor() {
-        MenuItem author = new MenuItem("About Author");
-
-        return author;
+        return new MenuItem("About Author");
     }
 
     /**
