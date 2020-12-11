@@ -6,6 +6,7 @@ target/generated-sources/
 target/jfx/
 .idea
 *.idea
+*.idea/*
 
 *.class
 *.jar
