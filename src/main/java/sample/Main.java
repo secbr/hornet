@@ -32,15 +32,18 @@ public class Main extends Application {
 		hBox.setPadding(new Insets(15));
 		// 设置组件之间的间隙
 		hBox.setSpacing(15);
-
+		// 默认选择第一个选项
 		choiceBox.getSelectionModel().select(0);
 		Label protocolLabel = new Label("协议：");
 		Label ipLabel = new Label("IP：");
 		TextField ipField = new TextField();
 		Label portLabel = new Label("端口：");
+
 		TextField portField = new TextField();
+		portField.setMaxWidth(80);
+
 		Button connect = new Button("连接");
-		Button disconnect = new Button("端口");
+		Button disconnect = new Button("断开");
 		hBox.getChildren().addAll(protocolLabel, choiceBox, ipLabel, ipField,
 				portLabel, portField, connect, disconnect);
 
