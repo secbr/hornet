@@ -32,6 +32,8 @@ public class Main extends Application {
 		hBox.setPadding(new Insets(15));
 		// 设置组件之间的间隙
 		hBox.setSpacing(15);
+
+		choiceBox.getSelectionModel().select(0);
 		Label protocolLabel = new Label("协议：");
 		Label ipLabel = new Label("IP：");
 		TextField ipField = new TextField();
