@@ -17,10 +17,9 @@ public class NettyClient {
 	private final String host;
 	private final int port;
 	private Channel channel;
-	private TextArea textArea;
+	private final TextArea textArea;
 	final EventLoopGroup group = new NioEventLoopGroup();
 
-	//连接服务端的端口号地址和端口号
 	public NettyClient(String host, int port, TextArea textArea) {
 		this.host = host;
 		this.port = port;
@@ -29,15 +28,15 @@ public class NettyClient {
 
 	public void start() throws Exception {
 		Bootstrap b = new Bootstrap();
-		b.group(group).channel(NioSocketChannel.class)  // 使用NioSocketChannel来作为连接用的channel类
-				.handler(new ChannelInitializer<SocketChannel>() { // 绑定连接初始化器
+		b.group(group).channel(NioSocketChannel.class)
+				.handler(new ChannelInitializer<SocketChannel>() {
 					@Override
-					public void initChannel(SocketChannel ch) throws Exception {
-						System.out.println("正在连接中...");
+					public void initChannel(SocketChannel ch) {
+						System.out.println("connecting...");
 						ChannelPipeline pipeline = ch.pipeline();
-						pipeline.addLast(new RpcEncoder(RpcRequest.class)); //编码request
-						pipeline.addLast(new RpcDecoder(RpcResponse.class)); //解码response
-						pipeline.addLast(new ClientHandler(textArea)); //客户端处理类
+						pipeline.addLast(new RpcEncoder(RpcRequest.class));
+						pipeline.addLast(new RpcDecoder(RpcResponse.class));
+						pipeline.addLast(new ClientHandler(textArea));
 					}
 				});
 		//发起异步连接请求，绑定连接端口和host信息
@@ -45,10 +44,9 @@ public class NettyClient {
 
 		future.addListener((ChannelFutureListener) arg0 -> {
 			if (future.isSuccess()) {
-				System.out.println("连接服务器成功");
-
+				System.out.println("connect success");
 			} else {
-				System.out.println("连接服务器失败");
+				System.out.println("connect failed");
 				future.cause().printStackTrace();
 				group.shutdownGracefully(); //关闭线程组
 			}
@@ -61,11 +59,10 @@ public class NettyClient {
 		return channel;
 	}
 
-	public void closeGroup(){
-		if(channel != null){
+	public void close() {
+		if (channel != null) {
+			textArea.appendText("close connection\n\r");
 			channel.close();
 		}
-		//关闭线程组
-//		group.shutdownGracefully();
 	}
 }

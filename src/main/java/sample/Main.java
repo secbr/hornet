@@ -1,7 +1,5 @@
 package sample;
 
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -83,7 +81,7 @@ public class Main extends Application {
 			RpcRequest request = new RpcRequest();
 			request.setId(UUID.randomUUID().toString());
 			request.setData(content.getText());
-			if(client== null || !client.getChannel().isActive()){
+			if (client == null || !client.getChannel().isActive()) {
 				new Alert(Alert.AlertType.NONE, "Channel closed!", new ButtonType[]{ButtonType.CLOSE}).show();
 				return;
 			}
@@ -190,7 +188,7 @@ public class Main extends Application {
 			String ip = ipField.getText();
 			String portText = portField.getText();
 			//关闭线程组
-			client.closeGroup();
+			client.close();
 			String text = "Disconnect from " + ip + ":" + portText + "！\n\r";
 			result.appendText(text);
 		});
