@@ -30,10 +30,6 @@ public class Main extends Application {
 		BorderPane root = new BorderPane();
 		root.getStyleClass().add(getClass().getResource("sample.fxml").toExternalForm());
 
-		// 第一行连接相关信息
-		HBox hBox = addHBox();
-		root.setTop(hBox);
-
 		GridPane gridPane = addGridPane();
 		root.setCenter(gridPane);
 
@@ -45,9 +41,20 @@ public class Main extends Application {
 
 	private GridPane addGridPane() {
 		GridPane gridPane = new GridPane();
-		gridPane.setHgap(2);
+		gridPane.setHgap(3);
 		gridPane.setVgap(1);
 		gridPane.setPadding(new Insets(0, 0, 0, 10));
+
+		// -----第0行start----
+		HBox configBox = addHBox();
+		// 设置布局位置
+		configBox.setAlignment(Pos.CENTER_LEFT);
+		// padding属性可设置为管理节点与HBox窗格边缘之间的距离,分别是上，右，下，左
+		configBox.setPadding(new Insets(15, 10, 15, 0));
+		// 设置组件之间的间隙
+		configBox.setSpacing(15);
+		gridPane.add(configBox, 1, 0);
+		// -----第0行end----
 
 		// -----第1行start----
 		HBox hBox = new HBox();
@@ -57,19 +64,19 @@ public class Main extends Application {
 		hBox.setPadding(new Insets(15, 10, 15, 0));
 		// 设置组件之间的间隙
 		hBox.setSpacing(15);
-		Label ipLabel = new Label("发送内容");
+		Label ipLabel = new Label("Content");
 		TextArea content = new TextArea();
 		content.setPrefRowCount(4);
 		content.setPrefWidth(600);
 
-		Button sendBtn = new Button("发送");
+		Button sendBtn = new Button("Send");
 		sendBtn.setOnAction(event -> {
-			result.appendText("发送消息：【" + content.getText() + "】\n\r");
+			result.appendText("Send message：【" + content.getText() + "】\n\r");
 		});
 
 		hBox.getChildren().addAll(ipLabel, content, sendBtn);
 
-		gridPane.add(hBox, 1, 0);
+		gridPane.add(hBox, 1, 1);
 		// -----第1行end----
 
 		// -----第2行start----
@@ -80,18 +87,18 @@ public class Main extends Application {
 		resultBox.setPadding(new Insets(15, 10, 15, 0));
 		// 设置组件之间的间隙
 		resultBox.setSpacing(15);
-		Label resultLabel = new Label("通信信息");
+		Label resultLabel = new Label("History");
 		result.setPrefRowCount(20);
 		result.setPrefWidth(600);
 
-		Button cleanBtn = new Button("清空");
+		Button cleanBtn = new Button("Clear All");
 		cleanBtn.setOnAction(event -> {
 			result.setText("");
 		});
 
 		resultBox.getChildren().addAll(resultLabel, result, cleanBtn);
 
-		gridPane.add(resultBox, 1, 1);
+		gridPane.add(resultBox, 1, 2);
 		// -----第2行end----
 		return gridPane;
 	}
@@ -107,23 +114,23 @@ public class Main extends Application {
 
 		// 默认选择第一个选项
 		choiceBox.getSelectionModel().select(0);
-		Label protocolLabel = new Label("协议：");
+		Label protocolLabel = new Label("Protocol：");
 
 		Label ipLabel = new Label("IP：");
 		TextField ipField = new TextField();
 		ipField.setText("127.0.0.1");
 
-		Label portLabel = new Label("端口：");
+		Label portLabel = new Label("Port：");
 		TextField portField = new TextField();
 		portField.setText("8888");
 		portField.setMaxWidth(80);
 
-		Button connect = new Button("连接");
+		Button connect = new Button("Connect");
 		connect.setOnAction((event -> {
 			// check ip
 			String ip = ipField.getText();
 			if (StringUtils.isEmpty(ip)) {
-				new Alert(Alert.AlertType.NONE, "IP不能为空", new ButtonType[]{ButtonType.CLOSE}).show();
+				new Alert(Alert.AlertType.NONE, "IP is null!", new ButtonType[]{ButtonType.CLOSE}).show();
 				return;
 			}
 
@@ -137,23 +144,23 @@ public class Main extends Application {
 			}
 
 			if (port < 1000 || port > 65536) {
-				new Alert(Alert.AlertType.NONE, "端口号错误", new ButtonType[]{ButtonType.CLOSE}).show();
+				new Alert(Alert.AlertType.NONE, "Port is wrong!", new ButtonType[]{ButtonType.CLOSE}).show();
 				return;
 			}
 
 			// TODO to connect
 
 			// add connect info to result
-			String text = "连接" + ip + ":" + port + " 成功！\n\r";
+			String text = "Connect to " + ip + ":" + port + " success！\n\r";
 			result.appendText(text);
 
 		}));
 
-		Button disconnect = new Button("断开");
+		Button disconnect = new Button("Disconnect");
 		disconnect.setOnAction(event -> {
 			String ip = ipField.getText();
 			String portText = portField.getText();
-			String text = "断开与" + ip + ":" + portText + "的连接！\n\r";
+			String text = "Disconnect from " + ip + ":" + portText + "！\n\r";
 			result.appendText(text);
 		});
 		hBox.getChildren().addAll(protocolLabel, choiceBox, ipLabel, ipField,
