@@ -1,5 +1,7 @@
 package sample;
 
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -10,7 +12,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import sample.netty.NettyClient;
+import sample.netty.RpcRequest;
 import sample.util.StringUtils;
+
+import java.util.UUID;
 
 /**
  * @author zzs
@@ -24,6 +30,8 @@ public class Main extends Application {
 	 * 通信信息展示
 	 */
 	final TextArea result = new TextArea();
+
+	NettyClient client = null;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -71,6 +79,22 @@ public class Main extends Application {
 
 		Button sendBtn = new Button("Send");
 		sendBtn.setOnAction(event -> {
+			//消息体
+			RpcRequest request = new RpcRequest();
+			request.setId(UUID.randomUUID().toString());
+			request.setData(content.getText());
+			if(client== null || !client.getChannel().isActive()){
+				new Alert(Alert.AlertType.NONE, "Channel closed!", new ButtonType[]{ButtonType.CLOSE}).show();
+				return;
+			}
+			// channel对象可保存在map中，供其它地方发送消息
+			try {
+				client.getChannel().writeAndFlush(request);
+			} catch (Exception e) {
+				result.appendText(e.getMessage() + "\n\r");
+				return;
+			}
+
 			result.appendText("Send message：【" + content.getText() + "】\n\r");
 		});
 
@@ -148,18 +172,25 @@ public class Main extends Application {
 				return;
 			}
 
-			// TODO to connect
-
+			// to connect server
+			client = new NettyClient(ip, port, result);
+			try {
+				client.start();
+			} catch (Exception e) {
+				new Alert(Alert.AlertType.NONE, "Connect Failed!", new ButtonType[]{ButtonType.CLOSE}).show();
+				return;
+			}
 			// add connect info to result
 			String text = "Connect to " + ip + ":" + port + " success！\n\r";
 			result.appendText(text);
-
 		}));
 
 		Button disconnect = new Button("Disconnect");
 		disconnect.setOnAction(event -> {
 			String ip = ipField.getText();
 			String portText = portField.getText();
+			//关闭线程组
+			client.closeGroup();
 			String text = "Disconnect from " + ip + ":" + portText + "！\n\r";
 			result.appendText(text);
 		});
