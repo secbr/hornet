@@ -1,7 +1,10 @@
 package sample.netty;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.CharsetUtil;
 import javafx.scene.control.TextArea;
 
 /**
@@ -9,7 +12,7 @@ import javafx.scene.control.TextArea;
  * @version 1.0
  * @date 2020/12/13
  **/
-public class ClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
+public class ClientHandler extends ChannelInboundHandlerAdapter {
 
 	private final TextArea textArea;
 
@@ -21,14 +24,17 @@ public class ClientHandler extends SimpleChannelInboundHandler<RpcResponse> {
 	 * 处理服务端返回的数据
 	 */
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, RpcResponse response) {
-		System.out.println("接受到server响应数据: " + response.toString());
-		textArea.appendText(response.toString() + "\n\r");
+	public void channelRead(ChannelHandlerContext ctx, Object msg) {
+		ByteBuf buf = (ByteBuf) msg;
+		System.out.println("服务端返回的信息：" + buf.toString(CharsetUtil.UTF_8));
+		textArea.appendText("received message：" + buf.toString(CharsetUtil.UTF_8) + "\n\r");
 	}
 
 	@Override
-	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		super.channelActive(ctx);
+	public void channelActive(ChannelHandlerContext ctx) {
+		// 发送数据
+		System.out.println("连接上了 服务器....");
+		ctx.writeAndFlush(Unpooled.copiedBuffer("哈哈 你好呀!!!", CharsetUtil.UTF_8));
 	}
 
 	@Override

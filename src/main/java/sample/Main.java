@@ -1,5 +1,7 @@
 package sample;
 
+import io.netty.buffer.Unpooled;
+import io.netty.util.CharsetUtil;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -11,10 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import sample.netty.NettyClient;
-import sample.netty.RpcRequest;
 import sample.util.StringUtils;
-
-import java.util.UUID;
 
 /**
  * @author zzs
@@ -77,22 +76,17 @@ public class Main extends Application {
 
 		Button sendBtn = new Button("Send");
 		sendBtn.setOnAction(event -> {
-			//消息体
-			RpcRequest request = new RpcRequest();
-			request.setId(UUID.randomUUID().toString());
-			request.setData(content.getText());
 			if (client == null || !client.getChannel().isActive()) {
 				new Alert(Alert.AlertType.NONE, "Channel closed!", new ButtonType[]{ButtonType.CLOSE}).show();
 				return;
 			}
 			// channel对象可保存在map中，供其它地方发送消息
 			try {
-				client.getChannel().writeAndFlush(request);
+				client.getChannel().writeAndFlush(Unpooled.copiedBuffer(content.getText(), CharsetUtil.UTF_8));
 			} catch (Exception e) {
 				result.appendText(e.getMessage() + "\n\r");
 				return;
 			}
-
 			result.appendText("Send message：【" + content.getText() + "】\n\r");
 		});
 

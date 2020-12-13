@@ -34,8 +34,8 @@ public class NettyClient {
 					public void initChannel(SocketChannel ch) {
 						System.out.println("connecting...");
 						ChannelPipeline pipeline = ch.pipeline();
-						pipeline.addLast(new RpcEncoder(RpcRequest.class));
-						pipeline.addLast(new RpcDecoder(RpcResponse.class));
+//						pipeline.addLast(new RpcEncoder(RpcRequest.class));
+//						pipeline.addLast(new RpcDecoder(RpcResponse.class));
 						pipeline.addLast(new ClientHandler(textArea));
 					}
 				});
