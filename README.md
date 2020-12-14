@@ -7,7 +7,7 @@ Hornet是一个TCP（基于Socket）工具，使用它可以建立TCP连接，�
 
 ## What does it look like?
 
-![Hornet](./doc/image1.jpg)
+![Hornet](http://www.choupangxia.com/wp-content/uploads/2020/12/image1.jpg)
 
 ## Build and Run
 
