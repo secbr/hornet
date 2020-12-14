@@ -20,7 +20,7 @@ import sample.util.StringUtils;
  */
 public class Main extends Application {
 
-    final String[] protocols = new String[]{"TCP", "UDP"};
+    final String[] protocols = new String[]{"TCP"};
     final ChoiceBox<String> choiceBox = new ChoiceBox<>(FXCollections.observableArrayList(protocols));
 
     /**
