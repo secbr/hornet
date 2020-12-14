@@ -34,12 +34,9 @@ public class NettyClient {
 					public void initChannel(SocketChannel ch) {
 						System.out.println("connecting...");
 						ChannelPipeline pipeline = ch.pipeline();
-//						pipeline.addLast(new RpcEncoder(RpcRequest.class));
-//						pipeline.addLast(new RpcDecoder(RpcResponse.class));
 						pipeline.addLast(new ClientHandler(textArea));
 					}
 				});
-		//发起异步连接请求，绑定连接端口和host信息
 		final ChannelFuture future = b.connect(host, port).sync();
 
 		future.addListener((ChannelFutureListener) arg0 -> {
@@ -48,7 +45,7 @@ public class NettyClient {
 			} else {
 				System.out.println("connect failed");
 				future.cause().printStackTrace();
-				group.shutdownGracefully(); //关闭线程组
+				group.shutdownGracefully();
 			}
 		});
 
@@ -61,7 +58,7 @@ public class NettyClient {
 
 	public void close() {
 		if (channel != null) {
-			textArea.appendText("close connection\n\r");
+			textArea.appendText("close the connection\n\r");
 			channel.close();
 		}
 	}
