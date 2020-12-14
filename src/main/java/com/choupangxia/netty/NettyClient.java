@@ -1,4 +1,4 @@
-package sample.netty;
+package com.choupangxia.netty;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;

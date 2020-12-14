@@ -1,5 +1,7 @@
-package sample;
+package com.choupangxia;
 
+import com.choupangxia.netty.NettyClient;
+import com.choupangxia.util.StringUtils;
 import io.netty.buffer.Unpooled;
 import io.netty.util.CharsetUtil;
 import javafx.application.Application;
@@ -12,8 +14,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import sample.netty.NettyClient;
-import sample.util.StringUtils;
 
 /**
  * @author zzs

@@ -1,4 +1,4 @@
-package sample;
+package com.choupangxia;
 
 public class Controller {
 }

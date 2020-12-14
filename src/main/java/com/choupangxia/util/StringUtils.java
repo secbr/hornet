@@ -1,4 +1,4 @@
-package sample.util;
+package com.choupangxia.util;
 
 /**
  * @author sec
