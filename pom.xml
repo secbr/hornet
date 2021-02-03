@@ -23,11 +23,15 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.38</version>
         </dependency>
+        <dependency>
+            <groupId>org.msgpack</groupId>
+            <artifactId>msgpack</artifactId>
+            <version>0.6.12</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!--各环境构建插件-->
             <plugin>
                 <groupId>com.zenjava</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -48,14 +52,11 @@
         </plugins>
         <resources>
             <resource>
-                <!-- 这里是放在 src/main/java-->
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**/*.properties</include>
                     <include>**/*.fxml</include>
                     <include>**/fxml/*.fxml</include>
-                    <!-- 如果想要弄个包名专门放fxml文件，像上一行这样添加设置 -->
-                    <!-- 之后，使用getResource("fxml/xx.fxml")这样子 -->
                 </includes>
                 <filtering>false</filtering>
             </resource>

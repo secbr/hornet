@@ -76,6 +76,9 @@ public class Main extends Application {
             }
             try {
                 client.getChannel().writeAndFlush(Unpooled.copiedBuffer(content.getText(), CharsetUtil.UTF_8));
+                // 16进制处理
+//                byte[] req = getHexBytes(content.getText());
+//                client.getChannel().writeAndFlush(Unpooled.copiedBuffer(req));
             } catch (Exception e) {
                 result.appendText(e.getMessage() + "\n\r");
                 return;
@@ -125,7 +128,7 @@ public class Main extends Application {
 
         Label portLabel = new Label("Port：");
         TextField portField = new TextField();
-        portField.setText("8888");
+        portField.setText("57656");
         portField.setMaxWidth(80);
 
         Button connect = new Button("Connect");
@@ -180,4 +183,40 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    //将16进制的字符串转成字符数组
+    public static byte[] getHexBytes(String str) {
+        str = str.replaceAll(" ", "");
+        byte[] bytes = new byte[str.length() / 2];
+        for (int i = 0; i < str.length() / 2; i++) {
+            String subStr = str.substring(i * 2, i * 2 + 2);
+            bytes[i] = (byte) Integer.parseInt(subStr, 16);
+        }
+        return bytes;
+    }
+
+    public static byte[] addBytes(byte[] data1, byte[] data2) {
+        byte[] data3 = new byte[data1.length + data2.length];
+        System.arraycopy(data1, 0, data3, 0, data1.length);
+        System.arraycopy(data2, 0, data3, data1.length, data2.length);
+        return data3;
+    }
+
+    public static String stringToAscii(String value)
+    {
+        StringBuffer sbu = new StringBuffer();
+        char[] chars = value.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            if(i != chars.length - 1)
+            {
+                sbu.append((int)chars[i]).append(",");
+            }
+            else {
+                sbu.append((int)chars[i]);
+            }
+        }
+        return sbu.toString();
+    }
+
+
 }

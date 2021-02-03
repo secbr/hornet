@@ -2,8 +2,8 @@ package com.choupangxia.netty;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.CharsetUtil;
 import javafx.scene.control.TextArea;
 
@@ -12,7 +12,7 @@ import javafx.scene.control.TextArea;
  * @version 1.0
  * @date 2020/12/13
  **/
-public class ClientHandler extends ChannelInboundHandlerAdapter {
+public class ClientHandler extends ChannelHandlerAdapter {
 
     private final TextArea textArea;
 
